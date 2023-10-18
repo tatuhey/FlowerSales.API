@@ -23,6 +23,18 @@ namespace WebApplication_ProjectAT2.Controllers
             return _shopContext.Products.ToArray();
         }
 
+        
+        [HttpGet("{Id}")]
+        public ActionResult GetProduct(int Id)
+        {
+            var product = _shopContext.Products.Find(Id);
+
+            if(product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
 
     }
 }
