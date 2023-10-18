@@ -51,5 +51,17 @@ namespace WebApplication_ProjectAT2.Controllers
             return Ok(product);
         }
 
+
+        [HttpPost]
+        public async Task<ActionResult> PostProduct (Product product)
+        {
+            _shopContext.Products.Add(product);
+            await _shopContext.SaveChangesAsync();
+
+            return CreatedAtAction(
+                "GetProduct",
+                new { id = product.Id },
+                product);
+        }
     }
 }
