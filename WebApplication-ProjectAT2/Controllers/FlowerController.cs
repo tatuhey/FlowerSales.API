@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication_ProjectAT2.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiVersion("1.0")]
+    //[Route("api/[controller]")]
+    //[ApiController]
+    [Route("v{v:apiVersion}/products")]
     public class FlowerController : ControllerBase
     {
         private readonly ShopContext _shopContext;
@@ -42,14 +44,32 @@ namespace WebApplication_ProjectAT2.Controllers
         {
             IQueryable<Product> products = _shopContext.Products;
 
+
             if (queryParameters.MinPrice != null)
             {
                 products = products.Where(p => p.Price >= queryParameters.MinPrice.Value);
             }
+
             if (queryParameters.MaxPrice != null)
             {
                 products = products.Where(p => p.Price <= queryParameters.MaxPrice.Value);
             }
+            
+            if (!string.IsNullOrEmpty(queryParameters.Name))
+            {
+                products = products.Where(p => p.Name.ToLower().Contains(queryParameters.Name.ToLower()));
+            }
+
+
+            if (!string.IsNullOrEmpty(queryParameters.sortBy))
+            {
+                if (typeof(Product).GetProperty(queryParameters.sortBy) != null)
+                {
+                    products = products.OrderByCustom(queryParameters.sortBy, queryParameters.SortOrder);
+                }
+            }
+
+
             products = products.Skip(queryParameters.Size * (queryParameters.Page - 1)).Take(queryParameters.Size);
             return Ok(await  products.ToArrayAsync());
         }

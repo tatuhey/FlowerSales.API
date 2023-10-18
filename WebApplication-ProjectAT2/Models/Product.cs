@@ -22,5 +22,7 @@ namespace WebApplication_ProjectAT2.Models
         public virtual Category? Category { get; set; }
 
 
+
+
     }
 }
