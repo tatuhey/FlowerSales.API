@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication_ProjectAT2.Models;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication_ProjectAT2.Controllers
 {
@@ -18,18 +20,31 @@ namespace WebApplication_ProjectAT2.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Product> GetAllProducts()
+        //public IEnumerable<Product> GetAllProducts()
+        //{
+        //    return _shopContext.Products.ToArray();
+        //}
+        public async Task<ActionResult> GetAllProducts()
         {
-            return _shopContext.Products.ToArray();
+            return Ok(await _shopContext.Products.ToArrayAsync());
         }
 
         
         [HttpGet("{Id}")]
-        public ActionResult GetProduct(int Id)
-        {
-            var product = _shopContext.Products.Find(Id);
+        //public ActionResult GetProduct(int Id)
+        //{
+        //    var product = _shopContext.Products.Find(Id);
 
-            if(product == null)
+        //    if(product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(product);
+        //}
+        public async Task<ActionResult> GetProduct(int Id)
+        {
+            var product = await _shopContext.Products.FindAsync(Id);
+            if (product == null)
             {
                 return NotFound();
             }
