@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
-using WebApplication_ProjectAT2.Models;
+using FlowerSales.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

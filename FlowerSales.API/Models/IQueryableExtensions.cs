@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
 
-namespace WebApplication_ProjectAT2.Models
+namespace FlowerSales.API.Models
 {
     public static class IQueryableExtensions
     {

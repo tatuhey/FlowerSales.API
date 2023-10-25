@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication_ProjectAT2.Models;
+using FlowerSales.API.Models;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication_ProjectAT2.Controllers
+namespace FlowerSales.API.Controllers
 {
     [ApiVersion ("1.0")]
     //[Route ("api/[controller]")]

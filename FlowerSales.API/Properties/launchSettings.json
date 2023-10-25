@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "WebApplication_ProjectAT2": {
+    "FlowerSales.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

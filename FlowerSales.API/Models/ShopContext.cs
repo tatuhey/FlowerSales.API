@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication_ProjectAT2.Models
+namespace FlowerSales.API.Models
 {
     public class ShopContext:DbContext
     {
