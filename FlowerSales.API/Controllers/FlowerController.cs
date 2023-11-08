@@ -28,6 +28,7 @@ namespace FlowerSales.API.Controllers
         //{
         //    return _shopContext.Products.ToArray();
         //}
+
         //public async Task<ActionResult> GetAllProducts()
         //{
         //    return Ok(await _shopContext.Products.ToArrayAsync());
@@ -56,7 +57,7 @@ namespace FlowerSales.API.Controllers
             {
                 products = products.Where(p => p.Price <= queryParameters.MaxPrice.Value);
             }
-            
+
             if (!string.IsNullOrEmpty(queryParameters.Name))
             {
                 products = products.Where(p => p.Name.ToLower().Contains(queryParameters.Name.ToLower()));
@@ -73,11 +74,11 @@ namespace FlowerSales.API.Controllers
 
 
             products = products.Skip(queryParameters.Size * (queryParameters.Page - 1)).Take(queryParameters.Size);
-            return Ok(await  products.ToArrayAsync());
+            return Ok(await products.ToArrayAsync());
         }
 
 
-        
+
         [HttpGet("{Id}")]
         //public ActionResult GetProduct(int Id)
         //{
