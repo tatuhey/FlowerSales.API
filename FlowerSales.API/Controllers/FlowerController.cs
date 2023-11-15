@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowerSales.API.Controllers
 {
+
+    // API Version 1.0 - basic functions, only get methods are here and GetAllProducts() uses IEnumerable.
     [ApiVersion("1.0")]
     [Route("products")]
     [ApiController]
@@ -43,6 +45,10 @@ namespace FlowerSales.API.Controllers
         }
     }
 
+    // API Version 2.0 - all methods use asynchronous method for better performance
+    //                   added methods to add new products
+    //                                    update existing products
+    //                                    delete specific product
 
     [ApiVersion("2.0")]
     [Route("products")]
