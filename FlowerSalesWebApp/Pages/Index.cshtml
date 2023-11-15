@@ -4,30 +4,65 @@
     ViewData["Title"] = "Home page";
 }
 
- <ul id="products-list"></ul>
+<!-- Loader indicator, hidden by default -->
+<div id="loader" style="display: none;">Loading...</div>
 
- @section Scripts{
-     <script>
-         let url = "https://localhost:7150/products";
-         let productsList = document.getElementById("products-list");
-     
-     
-         fetch(url)
-            .then(response => response.json())
-            .then(data => showProducts(data))
-            .catch(ex => {
+<!-- Products list container -->
+<ul id="products-list"></ul>
 
-                alert("error ");
-                console.error(ex);
-            });
+<!-- Error message container, for displaying fetch errors -->
+<div id="error-message" style="color: red;"></div>
 
-         function showProducts(products) {
-             products.forEach(product => {
-                 let li = document.createElement("li");
-                 let text = `${product.name}(\$${product.price})`;
-                 li.appendChild(document.createTextNode(text));
-                 productsList.appendChild(li);
-             });
-         }
-     </script>
- }
+@section Scripts{
+    <script>
+        // URL of the products API
+        let url = "https://localhost:7150/products";
+        // DOM elements
+        let productsList = document.getElementById("products-list");
+        let loader = document.getElementById("loader");
+        let errorMessage = document.getElementById("error-message");
+
+        // Function to fetch products from the API
+        async function fetchProducts() {
+            try {
+                displayLoading(true); // Show loader before fetch begins
+                let response = await fetch(url); // Fetch products from API
+                if (!response.ok) {
+                    // Throw error if response is not ok
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                let data = await response.json(); // Parse JSON data
+                showProducts(data); // Display products
+            } catch (ex) {
+                // Handle fetch errors
+                errorMessage.textContent = "Failed to load products. Please try again later.";
+                console.error(ex); // Log error to console
+            } finally {
+                displayLoading(false); // Hide loader after fetch is complete
+            }
+        }
+
+        // Function to display products
+        function showProducts(products) {
+            if (products.length === 0) {
+                // Show message if no products are available
+                productsList.innerHTML = '<li>No products available</li>';
+            } else {
+                products.forEach(product => {
+                    // Create list item for each product
+                    let li = document.createElement("li");
+                    let text = `${product.name} (\$${product.price})`;
+                    li.appendChild(document.createTextNode(text));
+                    productsList.appendChild(li);
+                });
+            }
+        }
+
+        // Function to show or hide the loading indicator
+        function displayLoading(show) {
+            loader.style.display = show ? 'block' : 'none';
+        }
+
+        fetchProducts(); // Call the function to start fetching products
+    </script>
+}
