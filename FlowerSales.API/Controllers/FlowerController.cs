@@ -65,7 +65,7 @@ namespace FlowerSales.API.Controllers
         }
 
         // GET: api/products
-        // Retrieves all products with optional query parameters for filtering and sorting
+        // Retrieves all available products with optional query parameters for filtering and sorting
         [HttpGet]
         public async Task<ActionResult> GetAllProducts([FromQuery] ProductParametersQuery queryParameters)
         {
@@ -96,6 +96,19 @@ namespace FlowerSales.API.Controllers
             // Pagination
             products = products.Skip(queryParameters.Size * (queryParameters.Page - 1)).Take(queryParameters.Size);
             return Ok(await products.ToArrayAsync());
+        }
+
+        // GET: api/products/by-availability/{availability}
+        // Retrieves all products based on availability
+        [HttpGet("by-availability/{availability}")]
+        public async Task<ActionResult> GetProductsByAvailability(bool availability)
+        {
+            var products = await _shopContext.Products.Where(p => p.IsAvailable == availability).ToListAsync();
+            if (products == null || !products.Any())
+            {
+                return NotFound();
+            }
+            return Ok(products);
         }
 
         // GET: api/products/{Id}
